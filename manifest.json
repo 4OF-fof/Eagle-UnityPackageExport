@@ -1,0 +1,16 @@
+{
+    "id": "57196771-6d1c-4564-8c92-bf346037aa41",
+    "version": "1.0.0",
+    "platform": "all",
+    "arch": "all",
+    "name": "UP Export",
+    "logo": "/logo.png",
+    "keywords": [],
+    "devTools": false,
+    "main": {
+        "url": "index.html",
+        "frame": false,
+        "width": 128,
+        "height": 96
+    }
+}
