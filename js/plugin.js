@@ -6,22 +6,18 @@ const path = require('path');
 const downloadsDir = path.join(os.homedir(), 'Downloads');
 const outputDir = path.join(downloadsDir, 'UP-Export');
 
-eagle.onPluginShow(async () => {
+eagle.onPluginRun(async () => {
 	let items = await eagle.item.get({ isSelected: true });
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	} else if (fs.existsSync(outputDir) && fs.readdirSync(outputDir).length > 0) {
-		const archiveDir = path.join(downloadsDir, 'UP-Archive');
-		if (!fs.existsSync(archiveDir)) {
-		  	fs.mkdirSync(archiveDir, { recursive: true });
-		}
+		const archiveDir = path.join(path.join(downloadsDir, 'UP-Archive'), String(Date.now()));
+		if (!fs.existsSync(archiveDir)) fs.mkdirSync(archiveDir, { recursive: true });
 		const files = fs.readdirSync(outputDir);
 		for (const file of files) {
-		  	if (file !== 'archive') {
-				const sourcePath = path.join(outputDir, file);
-				const destinationPath = path.join(archiveDir, file);
-				fs.renameSync(sourcePath, destinationPath);
-		 	}
+			const sourcePath = path.join(outputDir, file);
+			const destinationPath = path.join(archiveDir, file);
+			fs.renameSync(sourcePath, destinationPath);
 		}
 		console.log('既存のファイルをarchiveフォルダに移動しました。');
 	}
@@ -41,8 +37,9 @@ eagle.onPluginShow(async () => {
 		
 			console.log('unitypackageファイルを展開中...');
 			unityPackages.forEach(unityPackage => {
-			  	const outputPath = path.join(outputDir, unityPackage.entryName);
-			  	zip.extractEntryTo(unityPackage.entryName, outputDir, /* maintainEntryPath */ false, /* overwrite */ true);
+				const outDir = item.star != undefined ? path.join(outputDir, String(item.star)) : outputDir;
+			  	const outputPath = path.join(outDir, unityPackage.entryName);
+			  	zip.extractEntryTo(unityPackage.entryName, outDir, false, true);
 			  	console.log(`- ${unityPackage.entryName} を ${outputPath} に展開しました`);
 			});
 		
