@@ -23,6 +23,10 @@ eagle.onPluginRun(async () => {
 	}
 	items.forEach(item => {
 		try {
+			if(item.ext == "unitypackage") {
+				fs.copyFileSync(item.filePath, path.join(outputDir, item.name + ".unitypackage"));
+				return;
+			}
 			const zip = new AdmZip(item.filePath);
 			const entries = zip.getEntries();
 		
@@ -48,5 +52,5 @@ eagle.onPluginRun(async () => {
 				console.error('エラーが発生しました:', error);
 		  }
 	});
-	await eagle.window.hide();
+	//await eagle.window.hide();
 });
