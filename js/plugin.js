@@ -52,5 +52,5 @@ eagle.onPluginRun(async () => {
 				console.error('エラーが発生しました:', error);
 		  }
 	});
-	//await eagle.window.hide();
+	await eagle.window.hide();
 });
