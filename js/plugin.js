@@ -11,7 +11,7 @@ eagle.onPluginShow(async () => {
 	if (!fs.existsSync(outputDir)) {
 		fs.mkdirSync(outputDir, { recursive: true });
 	} else if (fs.existsSync(outputDir) && fs.readdirSync(outputDir).length > 0) {
-		const archiveDir = path.join(outputDir, 'archive');
+		const archiveDir = path.join(downloadsDir, 'UP-Archive');
 		if (!fs.existsSync(archiveDir)) {
 		  	fs.mkdirSync(archiveDir, { recursive: true });
 		}
