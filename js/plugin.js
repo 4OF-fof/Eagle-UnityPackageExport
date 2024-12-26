@@ -21,7 +21,7 @@ eagle.onPluginShow(async () => {
 				const sourcePath = path.join(outputDir, file);
 				const destinationPath = path.join(archiveDir, file);
 				fs.renameSync(sourcePath, destinationPath);
-		 	 }
+		 	}
 		}
 		console.log('既存のファイルをarchiveフォルダに移動しました。');
 	}
@@ -31,24 +31,24 @@ eagle.onPluginShow(async () => {
 			const entries = zip.getEntries();
 		
 			const unityPackages = entries.filter(entry => {
-			  return path.extname(entry.entryName).toLowerCase() === '.unitypackage';
+			  	return path.extname(entry.entryName).toLowerCase() === '.unitypackage';
 			});
 		
 			if (unityPackages.length === 0) {
-			  console.log('unitypackageファイルは見つかりませんでした。');
-			  return;
+			  	console.log('unitypackageファイルは見つかりませんでした。');
+			 	return;
 			}
 		
 			console.log('unitypackageファイルを展開中...');
 			unityPackages.forEach(unityPackage => {
-			  const outputPath = path.join(outputDir, unityPackage.entryName);
-			  zip.extractEntryTo(unityPackage.entryName, outputDir, /* maintainEntryPath */ false, /* overwrite */ true);
-			  console.log(`- ${unityPackage.entryName} を ${outputPath} に展開しました`);
+			  	const outputPath = path.join(outputDir, unityPackage.entryName);
+			  	zip.extractEntryTo(unityPackage.entryName, outputDir, /* maintainEntryPath */ false, /* overwrite */ true);
+			  	console.log(`- ${unityPackage.entryName} を ${outputPath} に展開しました`);
 			});
 		
 			console.log('展開が完了しました。');
 		  } catch (error) {
-			console.error('エラーが発生しました:', error);
+				console.error('エラーが発生しました:', error);
 		  }
 	});
 	await eagle.window.hide();
